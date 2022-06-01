@@ -1,0 +1,28 @@
+Metadata-Version: 2.1
+Name: whatsappy
+Version: 0.0.1
+Summary: Python for WhatsApp Business Cloud API
+Home-page: https://github.com/mglasner/whatsappy
+Author: Matías Glasner Vivanco
+Author-email: mglasner10@gmail.com
+Project-URL: Bug Tracker, https://github.com/mglasner/whatsappy/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# Whatsappy
+
+This is an open sourse package to interact with WhatsApp Business Cloud API using Python.
+
+We are looking for colaborators.
+
+# How to Install
+
+```pip install whatsappy```
+
+or in virtual env
+
+```python -m pip install whatsappy```

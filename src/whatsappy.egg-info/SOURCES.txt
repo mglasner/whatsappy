@@ -1,0 +1,10 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+src/whatsappy/__init__.py
+src/whatsappy/client.py
+src/whatsappy.egg-info/PKG-INFO
+src/whatsappy.egg-info/SOURCES.txt
+src/whatsappy.egg-info/dependency_links.txt
+src/whatsappy.egg-info/top_level.txt
