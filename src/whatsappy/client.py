@@ -54,8 +54,6 @@ class Client:
     ) -> requests.models.Response:
         """Send text messages.
 
-        Reference: https://developers.facebook.com/docs/whatsapp/cloud-api/reference/messages
-
         Args:
             phone_number (str): WhatsApp ID or phone number for the person you
                 want to send a message to.
@@ -206,3 +204,30 @@ class Client:
 
         self.message["template"] = template
         return self._config_and_post("template", phone_number)
+
+    def media_message(
+        self,
+        phone_number: str,
+        media_type: str,
+        link: str,
+        caption: str = None,
+        filename: str = None,
+    ) -> requests.models.Response:
+        """Send media messages.
+
+        Args:
+            phone_number (str): WhatsApp ID or phone number for the person you
+                want to send a message to.
+            media_type (str): Media type. Options: image, audio or document.
+            link (str): Url for the media.
+            caption (str, optional): Text message with the media file.
+                Defaults to None.
+            filename (str, optional): Filename for media file.
+                Defaults to None.
+
+        Returns:
+            requests.models.Response: _description_
+        """
+        media = {"link": link, "caption": caption, "filename": filename}
+        self.message[media_type] = media
+        return self._config_and_post(media_type, phone_number)

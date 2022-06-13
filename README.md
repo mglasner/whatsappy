@@ -11,3 +11,13 @@ We are looking for colaborators.
 or in virtual env
 
 ```python -m pip install whatsappy```
+
+# Usage
+
+## Text message
+
+```from whatsappy.client import Client```
+
+```client = Client(whatsapp_token, phone_number_id)```
+
+```response = client.text_message("56999999999", "my first message")```
