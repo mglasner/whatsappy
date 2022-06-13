@@ -228,6 +228,12 @@ class Client:
         Returns:
             requests.models.Response: _description_
         """
-        media = {"link": link, "caption": caption, "filename": filename}
+        media = {"link": link}
+        if caption is not None:
+            media["caption"] = caption
+
+        if filename is not None:
+            media["filename"] = filename
+
         self.message[media_type] = media
         return self._config_and_post(media_type, phone_number)

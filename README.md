@@ -16,8 +16,12 @@ or in virtual env
 
 ## Text message
 
-```from whatsappy.client import Client```
+```py
+    from whatsappy.client import Client
 
-```client = Client(whatsapp_token, phone_number_id)```
-
-```response = client.text_message("56999999999", "my first message")```
+    client = Client(whatsapp_token, phone_number_id)
+    response = client.text_message(
+        phone_number="56999999999",
+        body="my first message"
+    )
+```
