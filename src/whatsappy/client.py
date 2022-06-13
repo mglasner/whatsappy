@@ -177,7 +177,7 @@ class Client:
         phone_number: str,
         template_name: str,
         language: str,
-        components: list[tuple[str, list[str]]] = None,
+        components: dict = None,
     ) -> requests.models.Response:
         """Send template messages.
 
@@ -189,9 +189,8 @@ class Client:
             template_name (str): Name of the template.
             language (str): Contains a language object.
                 Specifies the language the template may be rendered in.
-            components (List[Tuple[str, List[str]]]): List of components.
-                Components are made by type and list of string to replace the
-                placeholders variables from template.
+            components (dict): Dictionary of components.
+                Read documentation for details.
                 type options are: header and body.
                 Defaults to None.
 
@@ -199,19 +198,10 @@ class Client:
             requests.models.Response: Object which contains a server's response
                 to an HTTP request.
         """
-        if components is not None:
-            components_object = []
-            for i, (type, texts) in enumerate(components):
-                components_object.append({"type": type, "parameters": []})
-                for text in texts:
-                    components_object[i]["parameters"].append(
-                        {"type": "text", "text": text}
-                    )
-
         template = {
             "name": template_name,
             "language": {"code": language},
-            "components": components_object if components is not None else components,
+            "components": components,
         }
 
         self.message["template"] = template

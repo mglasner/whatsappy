@@ -5,3 +5,4 @@ script.py
 dist/
 src/whatsappy.egg-info/
 test_messages.py
+components_objects.py
