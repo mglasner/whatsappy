@@ -4,3 +4,4 @@ __pycache__/
 script.py
 dist/
 src/whatsappy.egg-info/
+test_messages.py
