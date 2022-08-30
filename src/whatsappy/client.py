@@ -31,6 +31,11 @@ class Client:
         return self._post()
 
     def _post(self):
+        # TODO handle exceptions:
+        # ! requests.exceptions.ConnectTimeout
+        # ! urllib3.exceptions.MaxRetryError
+        # ! urllib3.exceptions.ConnectTimeoutError
+        # ! TimeoutError
         return requests.post(self.url, headers=self.headers, json=self.message)
 
     def mark_as_read(self, message_id: str):
