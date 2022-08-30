@@ -79,7 +79,7 @@ class Client:
         titles: list,
         body_text: str,
         header: dict = None,
-        footer_text: str = None,
+        footer: str = None,
     ) -> requests.models.Response:
         """Send interactive button messages.
 
@@ -116,7 +116,7 @@ class Client:
             "action": {"buttons": buttons},
             "body": {"text": body_text},
             "header": header,
-            "footer": {"text": footer_text} if footer_text is not None else footer_text,
+            "footer": footer,
         }
 
         self.message["interactive"] = interactive
@@ -129,7 +129,7 @@ class Client:
         button_text: str,
         body_text: str,
         header: dict = None,
-        footer_text: str = None,
+        footer: str = None,
     ) -> requests.models.Response:
         """Send interactive list messages.
 
@@ -181,7 +181,7 @@ class Client:
             "action": {"button": button_text, "sections": sections},
             "body": {"text": body_text},
             "header": header,
-            "footer": {"text": footer_text} if footer_text is not None else footer_text,
+            "footer": footer,
         }
 
         self.message["interactive"] = interactive
