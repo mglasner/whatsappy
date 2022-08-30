@@ -1,4 +1,4 @@
-"""Module for testing messages."""
+"""Module for testing text messages."""
 import json
 import os
 import sys
