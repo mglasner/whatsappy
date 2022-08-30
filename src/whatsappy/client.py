@@ -78,7 +78,7 @@ class Client:
         phone_number: str,
         titles: list,
         body_text: str,
-        header_text: str = None,
+        header: dict = None,
         footer_text: str = None,
     ) -> requests.models.Response:
         """Send interactive button messages.
@@ -86,9 +86,17 @@ class Client:
         Args:
             phone_number (str): WhatsApp ID or phone number for the person you
                 want to send a message to.
-            titles (list): List whit the title text for every button (up to 3).
+            titles (list): List with the title text for every button (up to 3).
             body_text (str): Text for the body of the message.
-            header_text (str, optional): Text for the header of the message. . Defaults to None.
+            header(dict, optional): header Meta object:
+                header = {
+                    type: document, image, text, video,
+                    if document or if image or if video): {
+                        link: url for the document,
+                        filename: optional, name for the file
+                    },
+                    text (if text): text for the header
+                },
             footer_text (str, optional): Text for the footer of the message. Defaults to None.
 
         Returns:
@@ -106,10 +114,8 @@ class Client:
         interactive = {
             "type": "button",
             "action": {"buttons": buttons},
-            "header": {"type": "text", "text": header_text}
-            if header_text is not None
-            else header_text,
             "body": {"text": body_text},
+            "header": header,
             "footer": {"text": footer_text} if footer_text is not None else footer_text,
         }
 
@@ -122,7 +128,7 @@ class Client:
         list_sections: list[tuple[str, list[tuple[str, str]]]],
         button_text: str,
         body_text: str,
-        header_text: str = None,
+        header: dict = None,
         footer_text: str = None,
     ) -> requests.models.Response:
         """Send interactive list messages.
@@ -143,7 +149,15 @@ class Client:
                     ]
             button_text (str): Text of the button for displaying the options.
             body_text (str): Text for the body of the message.
-            header_text (str, optional): Text for the header of the message. . Defaults to None.
+            header(dict, optional): header Meta object:
+                header = {
+                    type: document, image, text, video,
+                    if document or if image or if video): {
+                        link: url for the document,
+                        filename: optional, name for the file
+                    },
+                    text (if text): text for the header
+                },
             footer_text (str, optional): Text for the footer of the message. Defaults to None.
 
         Returns:
@@ -165,10 +179,8 @@ class Client:
         interactive = {
             "type": "list",
             "action": {"button": button_text, "sections": sections},
-            "header": {"type": "text", "text": header_text}
-            if header_text is not None
-            else header_text,
             "body": {"text": body_text},
+            "header": header,
             "footer": {"text": footer_text} if footer_text is not None else footer_text,
         }
 
