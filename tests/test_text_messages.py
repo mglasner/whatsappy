@@ -14,11 +14,21 @@ load_dotenv()
 WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN")
 PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
 TO = os.getenv("TO")
-CLIENT = Client(WHATSAPP_TOKEN, PHONE_NUMBER_ID)
+
+if WHATSAPP_TOKEN is None:
+    raise ValueError("WHATSAPP_TOKEN enviroment variable not found")
+
+if PHONE_NUMBER_ID is None:
+    raise ValueError("PHONE_NUMBER_ID enviroment variable not found")
+
+CLIENT = Client(WHATSAPP_TOKEN, int(PHONE_NUMBER_ID))
 
 
-def test_text_message():
+def test_text_message() -> None:
     """Base case for text message."""
+    if TO is None:
+        raise ValueError("TO enviroment variable not found")
+
     response = CLIENT.text_message(phone_number=TO, body="Test string")
     content = json.loads(response.content)
     assert "contacts" in content
@@ -31,8 +41,11 @@ def test_text_message():
     assert response.status_code == 200
 
 
-def test_text_message_with_preview_url():
+def test_text_message_with_preview_url() -> None:
     """Text message with preview url."""
+    if TO is None:
+        raise ValueError("TO enviroment variable not found")
+
     response = CLIENT.text_message(
         phone_number=TO,
         body="You should see the preview url\nhttps://www.google.com",
@@ -49,8 +62,11 @@ def test_text_message_with_preview_url():
     assert response.status_code == 200
 
 
-def test_text_message_without_preview_url():
+def test_text_message_without_preview_url() -> None:
     """Text message without preview url."""
+    if TO is None:
+        raise ValueError("TO enviroment variable not found")
+
     response = CLIENT.text_message(
         phone_number=TO,
         body="You shouldn't see the preview url\nhttps://www.google.com",
@@ -66,8 +82,11 @@ def test_text_message_without_preview_url():
     assert response.status_code == 200
 
 
-def test_text_message_with_empty_body():
+def test_text_message_with_empty_body() -> None:
     """Text message with empty body."""
+    if TO is None:
+        raise ValueError("TO enviroment variable not found")
+
     response = CLIENT.text_message(phone_number=TO, body="")
     content = json.loads(response.content)
     assert "contacts" not in content

@@ -14,7 +14,14 @@ load_dotenv()
 WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN")
 PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
 TO = os.getenv("TO")
-CLIENT = Client(WHATSAPP_TOKEN, PHONE_NUMBER_ID)
+
+if WHATSAPP_TOKEN is None:
+    raise ValueError("WHATSAPP_TOKEN enviroment variable not found")
+
+if PHONE_NUMBER_ID is None:
+    raise ValueError("PHONE_NUMBER_ID enviroment variable not found")
+
+CLIENT = Client(WHATSAPP_TOKEN, int(PHONE_NUMBER_ID))
 SECTIONS = [
     (
         "Section1",
@@ -37,8 +44,11 @@ TEXT_HEADER = {"type": "text", "text": "This is the header text"}
 FOOTER = {"text": "This is the footer text"}
 
 
-def test_interactive_list_message():
+def test_interactive_list_message() -> None:
     """Base case for interactive list message."""
+    if TO is None:
+        raise ValueError("TO enviroment variable not found")
+
     response = CLIENT.interactive_list_message(
         phone_number=TO,
         list_sections=SECTIONS,
@@ -56,8 +66,11 @@ def test_interactive_list_message():
     assert response.status_code == 200
 
 
-def test_interactive_list_message_with_text_header():
+def test_interactive_list_message_with_text_header() -> None:
     """Interactive list message with text header."""
+    if TO is None:
+        raise ValueError("TO enviroment variable not found")
+
     response = CLIENT.interactive_list_message(
         phone_number=TO,
         list_sections=SECTIONS,
@@ -76,8 +89,11 @@ def test_interactive_list_message_with_text_header():
     assert response.status_code == 200
 
 
-def test_interactive_list_message_with_footer():
+def test_interactive_list_message_with_footer() -> None:
     """Interactive list message with footer."""
+    if TO is None:
+        raise ValueError("TO enviroment variable not found")
+
     response = CLIENT.interactive_list_message(
         phone_number=TO,
         list_sections=SECTIONS,
@@ -96,8 +112,11 @@ def test_interactive_list_message_with_footer():
     assert response.status_code == 200
 
 
-def test_interactive_list_message_with_header_and_footer():
+def test_interactive_list_message_with_header_and_footer() -> None:
     """Interactive list message with header and footer."""
+    if TO is None:
+        raise ValueError("TO enviroment variable not found")
+
     response = CLIENT.interactive_list_message(
         phone_number=TO,
         list_sections=SECTIONS,

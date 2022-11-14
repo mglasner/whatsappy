@@ -31,7 +31,6 @@ classifiers = [
 "Homepage" = "https://github.com/mglasner/whatsappy"
 "Bug Tracker" = "https://github.com/mglasner/whatsappy/issues"
 
-
 [tool.mypy]
 files = "**/*.py"
 check_untyped_defs = true
@@ -42,6 +41,3 @@ warn_return_any = true
 warn_unused_ignores = true
 no_implicit_optional = true
 show_error_codes = true
-plugins = "sqlalchemy.ext.mypy.plugin"
-# for the future:
-# disallow_any_unimported = true
