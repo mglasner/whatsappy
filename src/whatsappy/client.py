@@ -2,12 +2,15 @@
 import uuid
 
 import requests
+from requests.adapters import HTTPAdapter, Retry
 
 
 class Client:
     """A client to connect WhatsApp Business Cloud API."""
 
-    def __init__(self, token: str, phone_number_id: str) -> None:
+    def __init__(
+        self, token: str, phone_number_id: int, api_version: str = "v15.0"
+    ) -> None:
         """Initialize Client objetc.
 
         Reference: https://developers.facebook.com/docs/whatsapp/cloud-api/reference/messages
@@ -15,10 +18,11 @@ class Client:
         Args:
             token (str): WhatsApp Business Cloud API Token given by Meta.
             phone_number_id (str): Phone number id given by Meta.
+            api_version (str, optional): Meta api version. Defaults to "v15.0".
         """
         self.token = token
         self.phone_number_id = phone_number_id
-        self.url = f"https://graph.facebook.com/v13.0/{phone_number_id}/messages?access_token={token}"
+        self.url = f"https://graph.facebook.com/{api_version}/{phone_number_id}/messages?access_token={token}"
         self.headers = {"Content-Type": "application/json"}
         self.message = {
             "messaging_product": "whatsapp",
@@ -36,6 +40,10 @@ class Client:
         # ! urllib3.exceptions.MaxRetryError
         # ! urllib3.exceptions.ConnectTimeoutError
         # ! TimeoutError
+        session = requests.Session()
+        retries = Retry(total=5, backoff_factor=0.1)
+        session.mount("http://", HTTPAdapter(max_retries=retries))
+        # return session.post(self.url, headers=self.headers, json=self.message)
         return requests.post(self.url, headers=self.headers, json=self.message)
 
     def mark_as_read(self, message_id: str):
@@ -78,8 +86,8 @@ class Client:
         phone_number: str,
         titles: list,
         body_text: str,
-        header: dict = None,
-        footer: str = None,
+        header: dict | None = None,
+        footer: str | None = None,
     ) -> requests.models.Response:
         """Send interactive button messages.
 
@@ -128,8 +136,8 @@ class Client:
         list_sections: list[tuple[str, list[tuple[str, str]]]],
         button_text: str,
         body_text: str,
-        header: dict = None,
-        footer: str = None,
+        header: dict | None = None,
+        footer: str | None = None,
     ) -> requests.models.Response:
         """Send interactive list messages.
 
@@ -192,7 +200,7 @@ class Client:
         phone_number: str,
         template_name: str,
         language: str,
-        components: dict = None,
+        components: dict | None = None,
     ) -> requests.models.Response:
         """Send template messages.
 
@@ -227,8 +235,8 @@ class Client:
         phone_number: str,
         media_type: str,
         link: str,
-        caption: str = None,
-        filename: str = None,
+        caption: str | None = None,
+        filename: str | None = None,
     ) -> requests.models.Response:
         """Send media messages.
 
