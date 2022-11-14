@@ -1,8 +1,10 @@
 """Client Module."""
 import uuid
+from typing import Any
 
 import requests
 from requests.adapters import HTTPAdapter, Retry
+from requests.models import Response
 
 
 class Client:
@@ -20,33 +22,29 @@ class Client:
             phone_number_id (str): Phone number id given by Meta.
             api_version (str, optional): Meta api version. Defaults to "v15.0".
         """
-        self.token = token
-        self.phone_number_id = phone_number_id
-        self.url = f"https://graph.facebook.com/{api_version}/{phone_number_id}/messages?access_token={token}"
-        self.headers = {"Content-Type": "application/json"}
-        self.message = {
+        self.token: str = token
+        self.phone_number_id: int = phone_number_id
+        self.url: str = f"https://graph.facebook.com/{api_version}/{phone_number_id}/messages?access_token={token}"
+        self.headers: dict = {"Content-Type": "application/json"}
+        self.message: dict = {
             "messaging_product": "whatsapp",
         }
 
-    def _config_and_post(self, _type, _to):
+    def _config_and_post(self, _type: str, _to: str) -> Response:
         # sourcery skip: class-extract-method
         self.message["type"] = _type
         self.message["to"] = _to
         return self._post()
 
-    def _post(self):
-        # TODO handle exceptions:
-        # ! requests.exceptions.ConnectTimeout
-        # ! urllib3.exceptions.MaxRetryError
-        # ! urllib3.exceptions.ConnectTimeoutError
-        # ! TimeoutError
-        session = requests.Session()
-        retries = Retry(total=5, backoff_factor=0.1)
-        session.mount("http://", HTTPAdapter(max_retries=retries))
-        # return session.post(self.url, headers=self.headers, json=self.message)
-        return requests.post(self.url, headers=self.headers, json=self.message)
+    def _post(self) -> Response:
+        request_session = requests.Session()
+        retries = Retry(
+            total=5, backoff_factor=0.1, status_forcelist=[500, 502, 503, 504]
+        )
+        request_session.mount("", HTTPAdapter(max_retries=retries))
+        return request_session.post(self.url, headers=self.headers, json=self.message)
 
-    def mark_as_read(self, message_id: str):
+    def mark_as_read(self, message_id: str) -> Response:
         """Mark messages as read.
 
         https://developers.facebook.com/docs/whatsapp/cloud-api/guides/mark-message-as-read
@@ -64,7 +62,7 @@ class Client:
 
     def text_message(
         self, phone_number: str, body: str, preview_url: bool = False
-    ) -> requests.models.Response:
+    ) -> Response:
         """Send text messages.
 
         Args:
@@ -88,7 +86,7 @@ class Client:
         body_text: str,
         header: dict | None = None,
         footer: str | None = None,
-    ) -> requests.models.Response:
+    ) -> Response:
         """Send interactive button messages.
 
         Args:
@@ -138,7 +136,7 @@ class Client:
         body_text: str,
         header: dict | None = None,
         footer: str | None = None,
-    ) -> requests.models.Response:
+    ) -> Response:
         """Send interactive list messages.
 
         Args:
@@ -173,7 +171,7 @@ class Client:
         """
         sections = []
         for section_title, section_rows in list_sections:
-            section = {"title": section_title, "rows": []}
+            section: dict[str, Any] = {"title": section_title, "rows": []}
             for title, description in section_rows:
                 section["rows"].append(
                     {
@@ -201,7 +199,7 @@ class Client:
         template_name: str,
         language: str,
         components: dict | None = None,
-    ) -> requests.models.Response:
+    ) -> Response:
         """Send template messages.
 
         Components support only for type header and body.
@@ -237,7 +235,7 @@ class Client:
         link: str,
         caption: str | None = None,
         filename: str | None = None,
-    ) -> requests.models.Response:
+    ) -> Response:
         """Send media messages.
 
         Args:
