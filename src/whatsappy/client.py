@@ -85,7 +85,7 @@ class Client:
         titles: list,
         body_text: str,
         header: dict | None = None,
-        footer: str | None = None,
+        footer: dict | None = None,
     ) -> Response:
         """Send interactive button messages.
 
@@ -135,7 +135,7 @@ class Client:
         button_text: str,
         body_text: str,
         header: dict | None = None,
-        footer: str | None = None,
+        footer: dict | None = None,
     ) -> Response:
         """Send interactive list messages.
 
