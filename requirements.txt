@@ -4,8 +4,6 @@
 #
 #    pip-compile
 #
-atomicwrites==1.4.1
-    # via pytest
 attrs==22.1.0
     # via pytest
 certifi==2022.5.18.1
@@ -13,6 +11,8 @@ certifi==2022.5.18.1
 charset-normalizer==2.0.12
     # via requests
 colorama==0.4.5
+    # via pytest
+exceptiongroup==1.0.2
     # via pytest
 idna==3.3
     # via requests
@@ -22,13 +22,11 @@ packaging==21.3
     # via pytest
 pluggy==1.0.0
     # via pytest
-py==1.11.0
-    # via pytest
 pyparsing==3.0.9
     # via packaging
-pytest==7.1.2
+pytest==7.2.0
     # via -r requirements.in
-requests==2.27.1
+requests==2.28.1
     # via -r requirements.in
 tomli==2.0.1
     # via pytest
