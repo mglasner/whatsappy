@@ -4,17 +4,17 @@ This is an open sourse package to interact with WhatsApp Business Cloud API usin
 
 We are looking for colaborators.
 
-# How to Install
+## How to Install
 
-```pip install whatsappy```
+`pip install whatsappy`
 
 or in virtual env
 
-```python -m pip install whatsappy```
+`python -m pip install whatsappy`
 
-# Usage
+## Usage
 
-## Text message
+### Text message
 
 ```py
     from whatsappy.client import Client
@@ -23,5 +23,18 @@ or in virtual env
     response = client.text_message(
         phone_number="56999999999",
         body="my first message"
+    )
+```
+
+### Interactive button message
+
+```py
+    from whatsappy.client import Client
+
+    client = Client(whatsapp_token, phone_number_id)
+    response = client.interactive_button_message(
+        phone_number="56999999999",
+        titles=["button-1", "button-2"]
+        body_text="my first button message"
     )
 ```
