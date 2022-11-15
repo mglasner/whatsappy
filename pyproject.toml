@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=42"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.black]
@@ -13,7 +13,7 @@ image_alt = true
 
 [project]
 name = "whatsappy"
-version = "1.0.0"
+version = "1.1.0"
 authors = [
   { name="Matías Glasner Vivanco", email="mglasner10@gmail.com" },
 ]
